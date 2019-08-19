@@ -44,7 +44,7 @@ app.post("/", function (req, res) {
 app.use(express.static(__dirname + ''));
 
 /* Start listening to port 80*/
-server.listen (4040);
+server.listen (8080);
 
 
 
