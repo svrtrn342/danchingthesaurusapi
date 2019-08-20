@@ -24,19 +24,20 @@ var renderer;
 var maxquantity = 70;
 var step = 0,
     radius = 200,
-    speed = 1;
+    speed = 50;
 var isPaused = true;
 var maxwordcounts = 10;
 var ismagnet = false;
 var createnewword = true;
-var attractorbehaviorbodies = [];
+var attractorbehaviorbodies = []
+-69+5
 $(document).ready(function() {
     $(".inputkeyword").val("");
     if ($(window).width() < 600) {
 
         maxquantity = 20;
     }
-
+maxwordcounts=maxquantity/2;
     $("#dance-floor").height($(window).height() - $("#dance-floor").offset().top - 20);
     $(".dance-btn").height($(".dance-btn").width());
 
@@ -90,14 +91,29 @@ $(document).ready(function() {
 
     window.addEventListener('deviceorientation', onWindowDeviceOrientation, false);
     window.addEventListener('blur', function() {
+try{
+     //    world.pause();
+}catch(ex){}
+            //world.warp(.001);
+            isPaused = true;
+         
+		
+		
+		   
+          
 
-        isPaused = true;
+      
+		
+		
 
     }, true);
 
     window.addEventListener('focus', function() {
-
-        isPaused = false;
+try{
+//world.unpause();
+}catch(ex){}
+            isPaused = false;
+         
 
     }, true);
 
@@ -655,6 +671,7 @@ $(document).ready(function() {
 
 
     $('#ex23').slider({
+		value:speed,
         formatter: function(value) {
             return value;
 
@@ -699,6 +716,7 @@ $(document).ready(function() {
 
 
     $('#ex24').slider({
+		value:maxwordcounts,
         max: maxquantity,
         formatter: function(value) {
             return value;
@@ -736,7 +754,6 @@ $(document).ready(function() {
         $(this).addClass("selected-display");
         $(this).parent().find(".no-display").hide();
     });
-
 
 
     $(".inputkeyword").blur(function() {
@@ -862,18 +879,9 @@ if(synonym_value!=""){
 					   var nonemptywordkinds=[];
 					   
 					   for(var j=0;j<words.length;j++){
-						   if(words[j]!=""){
+						   if(words[j].trim()!=""){
 						   nonemptywordkinds.push(j);
 						   }
-					   }
-					   if(word1!=""){
-						   firstwordkind=0;
-					   }else if(word2!=""){
-						   firstwordkind=1;
-					   }else if(word3!=""){
-						   firstwordkind=2;
-					   }else if(word4!=""){
-						   firstwordkind=3;
 					   }
 
          /*   $.post("/synonym", {
@@ -884,9 +892,12 @@ if(synonym_value!=""){
                 })
                 .done(function(data1) {*/
 				 synonyms = [];
+
+				 
+				 
 				for(var k=0;k<nonemptywordkinds.length;k++){
-				
-				before_results_events(nonemptywordkinds[k],words);
+				//console.log(nonemptywordkinds[k]+" : "+words[nonemptywordkinds[k]]);
+				before_results_events(nonemptywordkinds[k],words,nonemptywordkinds);
 				
 				}
 				    
@@ -944,24 +955,30 @@ if(synonym_value!=""){
 
 });
 
-	function process_data(j,data){
-		
+	function process_data(j,wordvalue,data){
+
 		
                         var synonymid = "word" + (j + 1);
+						
+
+						
+						
                         if (data[synonymid + "_synonyms"][1].length > 0) {
 							
-							if(synonyms[j] && synonyms[j]["words"].length>0){
-								
+						/*	if(synonyms[j] && synonyms[j]["words"].length>0){
+								console.log("here is a problem");
 							    synonyms[j]["words"]=data[synonymid + "_synonyms"][1];
+								synonyms[j]["value"]=wordvalue;
 								synonyms[j]["pattern"]=1;
 								synonyms[j]["serial"]=0;	
 								
                           
-							}else{
+							}else{*/
 								
 								  synonyms.push({
                                 "id": $("#word" + (j + 1)).attr("id"),
                                 "pattern": 1,
+								"value": wordvalue,
                                 "serial": 0,
                                // "words": [$("#word" + (j + 1)).val()].concat(data[synonymid + "_synonyms"][1])
 							    "words": data[synonymid + "_synonyms"][1]
@@ -969,7 +986,7 @@ if(synonym_value!=""){
 
                             $("#word" + (j + 1)).next().hide(); //.css("border","1px solid red");
 								
-							}
+						//	}
                         } else {
 
 
@@ -982,6 +999,10 @@ if(synonym_value!=""){
 
 
                         }
+						
+						
+
+
 		
 	}
 	
@@ -1015,34 +1036,50 @@ if(synonym_value!=""){
 		
 		
 	}
-	function before_results_events(word_serial,words){
+	function before_results_events(word_serial,words,nonemptywordkinds){
+		
+
 		
 					httpRequest("word"+(word_serial+1),words[word_serial].trim()).then(function(data1) {
-                   
-				   
-				   
-				   
-				   
+						
+				    if(data1["word"+(word_serial+1) + "_synonyms"][0]!=undefined && data1["word"+(word_serial+1) + "_synonyms"][1].length>0){
+						
 
-
-                     
-for(var j=0;j<4;j++){				
-
-				data1["word"+(j+1) + "_synonyms"][1]=remove_duplicate_syntax(data1["word"+(j+1) + "_synonyms"][1]);	
-
-}
-
-
-
-                    process_data(word_serial,data1);
-
-                    
-                    console.log(synonyms);
+						
+						 data1["word"+(word_serial+1) + "_synonyms"][1]=remove_duplicate_syntax(data1["word"+(word_serial+1) + "_synonyms"][1]);	
+                    process_data(word_serial,words[word_serial].trim(),data1);
 
                     $(".synonymsstatus").hide();
 
 
 
+				   
+                    if (synonyms.length < 1) {
+						
+
+                    }else if(synonyms.length==1){
+						$(".dance-btn").show();
+
+
+                  after_results_events();
+					
+						
+					}else{
+					
+					}
+					
+						
+					}else{
+						
+						
+						
+						httpRequest("word"+(word_serial+1),words[word_serial].trim()).then(function(data2) {
+						
+				   if(data2["word"+(word_serial+1) + "_synonyms"][0]!=undefined && data2["word"+(word_serial+1) + "_synonyms"][1].length>0){
+						 data2["word"+(word_serial+1) + "_synonyms"][1]=remove_duplicate_syntax(data2["word"+(word_serial+1) + "_synonyms"][1]);	
+                    process_data(word_serial,data2);
+
+                    $(".synonymsstatus").hide();
 
                     if (synonyms.length < 1) {
 						
@@ -1057,8 +1094,19 @@ for(var j=0;j<4;j++){
 					}else{
 					
 					}
+					
+						}
+					
+					});
+						
+	
+					}	
+                   
+                   
+					
+					
 
-                })
+                });
 		
 		
 	}
@@ -1087,7 +1135,7 @@ function httpRequest(wordtype,wordvalue) {
 
 
 function change_synonyms(synonym_kind,word,changetype){
-	console.log("changing synonym: "+word);
+	
 	
 	var wordname=("word"+(synonym_kind+1));
 	
@@ -1119,7 +1167,7 @@ function change_synonyms(synonym_kind,word,changetype){
 							
 							}
 							
-							console.log(data[synonymid + "_synonyms"][1]);
+							
                            /* synonyms.push({
                                 "id": $("#word" + (synonym_kind + 1)).attr("id"),
                                 "pattern": 1,
@@ -1230,7 +1278,7 @@ function dance() {
 
             if (choosesynonym != null) {
 				synonyms[synonymkind]["serial"]++;
-                $("#dance-floor").append('<span style="background-color:' + tilecolors[synonymkind] + '" class="physics-element" id="physics-' + nextid + '">&nbsp;' + choosesynonym + '&nbsp;</span>');
+                $("#dance-floor").append('<span style="background-color:' + tilecolors[synonyms[synonymkind]["id"].replace("word","").trim()-1] + '" class="physics-element" id="physics-' + nextid + '">&nbsp;' + choosesynonym + '&nbsp;</span>');
                 var element = document.getElementById("physics-" + nextid);
 
                 var offsets = $("#physics-" + nextid).offset();

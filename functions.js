@@ -100,7 +100,7 @@ if(word1 && word1.toString().trim()!=""){
 	
 	httpRequest(word1.toString().trim()).then(function(results) {
 	word1_synonyms=results;
-
+console.log({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
  res.send({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
 
 });
@@ -108,7 +108,8 @@ if(word1 && word1.toString().trim()!=""){
 }else if(word2 && word2.toString().trim()!=""){
 	httpRequest(word2.toString().trim()).then(function(results) {
 	word2_synonyms=results;
-
+console.log({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
+ 
  res.send({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
 
 });
@@ -116,7 +117,8 @@ if(word1 && word1.toString().trim()!=""){
 }else if(word3 && word3.toString().trim()!=""){
 	httpRequest(word3.toString().trim()).then(function(results) {
 	word3_synonyms=results;
-
+console.log({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
+ 
  res.send({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
 
 });
@@ -124,7 +126,8 @@ if(word1 && word1.toString().trim()!=""){
 }else if(word4 && word4.toString().trim()!=""){
 	httpRequest(word4.toString().trim()).then(function(results) {
 	word4_synonyms=results;
-
+console.log({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
+ 
  res.send({ word1_synonyms: [escape(word1),word1_synonyms],word2_synonyms: [escape(word2),word2_synonyms],word3_synonyms: [escape(word3),word3_synonyms],word4_synonyms: [escape(word4),word4_synonyms]});
 
 });
