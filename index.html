@@ -636,35 +636,92 @@ font-size:2em
     </div>
 </div>
 
+<script>
+$(document).ready(function(){
+
+$(".contactformfield1").val("");
+$(".contactformfield2").val("");
+$(".contactformfield3").val("");
+
+$(".contactformfield1").click(function(){
+$(this).next().text('');
+
+});
+
+$(".contactformfield1").blur(function(){
+
+if($(this).val().trim()==""){
+$(this).next().text('First Name');
+}
+
+});
+
+$(".contactformfield2").click(function(){
+$(this).next().text('');
+
+});
+
+$(".contactformfield2").blur(function(){
+
+if($(this).val().trim()==""){
+$(this).next().text('Email-id');
+}
+
+});
+
+
+$(".contactformfield3").click(function(){
+$(this).next().text('');
+
+});
+
+$(".contactformfield3").blur(function(){
+
+if($(this).val().trim()==""){
+$(this).next().text('Message');
+}
+
+});
+
+$('.submit-button').on('click',function(){
+       window.location.href = "mailto:dancingthesaurus@gmail.com?subject=Contact dancing thesaurus&body=Hi, I am "+$("#icon_prefix").val()+". My email is :"+$("#icon_email").val()+". My Message is: "+$("#icon_prefix2").val(); 
+    });
+
+
+
+});
+
+</script>
+
 <!--Footer-->
 <footer id="contact" class="page-footer default_color scrollspy">
     <div class="container">  
         <div class="row">
             <div class="col l6 s12">
-                <form class="col s12" action="contact.php" method="post">
+             <!--   <form class="col s12" action="contact.php" method="post">-->
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="mdi-action-account-circle prefix white-text"></i>
-                            <input id="icon_prefix" name="name" type="text" class="validate white-text">
+                            <input id="icon_prefix" name="name" type="text"    class="contactformfield1 validate white-text">
                             <label for="icon_prefix" class="white-text">First Name</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="mdi-communication-email prefix white-text"></i>
-                            <input id="icon_email" name="email" type="email" class="validate white-text">
+                            <input id="icon_email" name="email" type="email" class="contactformfield2 validate white-text">
                             <label for="icon_email" class="white-text">Email-id</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="mdi-editor-mode-edit prefix white-text"></i>
-                            <textarea id="icon_prefix2" name="message" class="materialize-textarea white-text"></textarea>
+                            <textarea id="icon_prefix2" name="message" class="contactformfield3 materialize-textarea white-text"></textarea>
                             <label for="icon_prefix2" class="white-text">Message</label>
                         </div>
                         <div class="col offset-s7 s5">
-                            <button class="btn waves-effect waves-light red darken-1" type="submit">Submit
+                            <button class="btn submit-button waves-effect waves-light red darken-1" >Submit
                                 <i class="mdi-content-send right white-text"></i>
                             </button>
                         </div>
                     </div>
-                </form>
+               <!-- </form>-->
             </div>
             <div class="col l3 s12">
                 <h5 class="white-text">DancingThesaurus.com</h5>
